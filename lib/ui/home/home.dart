@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:music_app/ui/discovery/discovery.dart';
+import 'package:music_app/ui/settings/settings.dart';
+import 'package:music_app/ui/user/user.dart';
 
 class MusicApp extends StatelessWidget {
   const MusicApp({super.key});
@@ -7,7 +10,7 @@ class MusicApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Music App", //đặt tên ứng dụng
+      title: "MUSIC APP", //đặt tên ứng dụng
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), //tạo bảng màu dựa trên màu tím làm chủ đạo
         useMaterial3: true //bật Material Design 3
@@ -26,7 +29,10 @@ class MusicHomePage extends StatefulWidget {
 
 class _MusicHomePageState extends State<MusicHomePage> {
   final List<Widget> _tab = [
-
+    const HomeTab(),
+    const DiscoveryTab(),
+    const UserTab(),
+    const SettingsTab()
   ];
   @override
   Widget build(BuildContext context) {
@@ -57,7 +63,7 @@ class _MusicHomePageState extends State<MusicHomePage> {
           ]
         ), 
         tabBuilder: (BuildContext context, int index) {  
-          return _tab[1];
+          return _tab[index];
         },
       ),
       
