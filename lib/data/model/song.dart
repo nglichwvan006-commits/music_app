@@ -31,5 +31,16 @@ class Song {
       required this.duration
     }
   );
-  
+  @override
+  String toString() {
+    return 'Song('
+        'id: $id, '
+        'title: $title, '
+        'album: $album, '
+        'artist: $artist, '
+        'source: $source, '
+        'image: $image, '
+        'duration: $duration'
+        ')';
+  }
 }

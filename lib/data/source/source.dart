@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:music_app/data/model/song.dart';
 import 'package:http/http.dart' as http;
 abstract interface class DataSource { //dong vai tro la mot class ao
@@ -8,9 +9,9 @@ abstract interface class DataSource { //dong vai tro la mot class ao
 class RemoteDataSource implements DataSource {
   @override
   Future<List<Song>?> loadData() async {
-    const url = 'https://thantrieu.com/resources/braniumapis/songs.json';
+    const url = 'https://thantrieu.com/resources/braniumapis/songs.jsonn';
     final uri = Uri.parse(url);
-    final response = await http.get(uri); //sử dụng http.get() để kéo dữ liệu từ uri về
+    final response = await http.get(uri); //sử dụng plugin http.get() để kéo dữ liệu từ uri về
     if(response.statusCode == 200) { //Theo chuẩn internet thì giá trị 200 có nghĩa là tải thành công
       final bodyContent = utf8.decode(response.bodyBytes); //chuyển định dạng để không bị lỗi font chữ
       var songWrapper = json.decode(bodyContent) as Map; //cặp ngoặc {} ngoài cùng 
@@ -33,8 +34,14 @@ class RemoteDataSource implements DataSource {
 }
 class LocalDataSource implements DataSource {
   @override
-  Future<List<Song>?> loadData() {
-    // TODO: implement loadData
-    throw UnimplementedError();
+  Future<List<Song>?> loadData() async {
+    //Bước lấy dữ liệu
+    final response = await rootBundle.loadString('assets/songs.json'); //đọc dữ liệu từ local thì dùng rootBundle.loadString('Đường dẫn')
+    //Bước giải mã response va as Map
+    final jsonBody = jsonDecode(response) as Map;
+    //As List 
+    final songList = jsonBody["songs"] as List;
+    List<Song> songs = songList.map((song) => Song.fromJson(song)).toList();
+    return songs;
   }
 }
