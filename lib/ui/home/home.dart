@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:music_app/data/model/song.dart';
 import 'package:music_app/ui/discovery/discovery.dart';
+import 'package:music_app/ui/home/viewmodel.dart';
 import 'package:music_app/ui/settings/settings.dart';
 import 'package:music_app/ui/user/user.dart';
 
@@ -10,6 +12,7 @@ class MusicApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "MUSIC APP", //đặt tên ứng dụng
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), //tạo bảng màu dựa trên màu tím làm chủ đạo
@@ -38,7 +41,7 @@ class _MusicHomePageState extends State<MusicHomePage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle: Text("Music App"),
+        middle: Text("MUSIC APP"),
       ),
       child: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
@@ -76,6 +79,35 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const HomeTabPage();
   }
 }
+
+class HomeTabPage extends StatefulWidget {
+  const HomeTabPage({super.key});
+
+  @override
+  State<HomeTabPage> createState() => _HomeTabPageState();
+}
+
+class _HomeTabPageState extends State<HomeTabPage> {
+  List<Song> songs = [];
+  late MusicAppViewModel _viewModel; 
+
+  @override
+  void initState(){ //phương thức khởi tạo trạng thái
+    _viewModel = MusicAppViewModel();
+    _viewModel.loadSongs();
+    observeData();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+
+  void observeData() {
+    
+  }
+}
+
